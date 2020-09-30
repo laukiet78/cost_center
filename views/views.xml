@@ -1,0 +1,47 @@
+<odoo>
+  <data>
+    <!-- inherit analytic line -->
+    <record model="ir.ui.view" id="mather_related_analytic_line">
+        <field name="name">mahter related analytic</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_line_form"/>
+        <field name="arch" type="xml">
+            <field name="account_id" position="before">
+                <field name="analytic_mather"/>
+                <field name="debit"/>
+                <field name="credit"/>
+            </field>
+        </field>
+    </record>
+    <!-- end inherit analytic line -->
+
+    <!-- pivot view -->
+      <record id="view_pivot" model="ir.ui.view">
+      <field name="name">Centro costos</field>
+      <field name="model">account.analytic.line</field>
+      <field name="arch" type="xml">
+        <pivot string="Pivot View">
+          <field name="date" interval="month" type="col"/>
+          <field name="analytic_mather" type="row"/>
+          <field name="account_id" type="row"/>
+          <field name="debit" type="measure"/>
+          <field name="credit" type="measure"/>
+          <field name="amount" type="measure"/>
+        </pivot>
+      </field>
+      </record>
+    <!-- end pivot view -->
+
+    <act_window id="action_cost_center_pivot"
+                name="centro de costos"
+                res_model="account.analytic.line"
+                view_mode="pivot"
+                target="current"/>
+
+    <menuitem id="menu_cost_center_pivot"
+        action="action_cost_center_pivot"
+        name="Centro de costos"
+        parent="account_pending.menu_account_pending_report_wizard"/>
+
+  </data>
+</odoo>
